@@ -17,10 +17,7 @@ pipeline {
                   echo ${BUILD_NUMBER} > ../bakehouse-build-number.txt
               """
             }
-          } else {
-            sh 'echo "user choosed ${ENV}"'
-          }
-        }
+          } 
       }
     }
     stage('deploy') {

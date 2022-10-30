@@ -1,8 +1,7 @@
 pipeline {
-  agent { label 'slave' }
+  agent { label "slave"  }
   stages {
     stage('build') {
-
       steps {
         script {
           if (ENV.BRANCH_NAME == "release") {

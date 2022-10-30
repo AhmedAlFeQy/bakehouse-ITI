@@ -1,9 +1,9 @@
 pipeline {
-  agent { label 'slave' }
+  agent { label "slave" }
 
   stages {
     stage('build') {
-   steps {
+      steps {
         script {
           if (ENV.BRANCH_NAME == "release") {
             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'password')]) {

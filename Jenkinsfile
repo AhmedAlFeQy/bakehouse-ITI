@@ -5,8 +5,7 @@ pipeline {
   }
   stages {
     stage('build') {
-=
-      steps {
+   steps {
         script {
           if (ENV.BRANCH_NAME == "release") {
             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'password')]) {
@@ -17,10 +16,8 @@ pipeline {
                   echo ${BUILD_NUMBER} > ../bakehouse-build-number.txt
               """
             }
-          } else {
-            sh 'echo "user choosed ${ENV}"'
           }
-        }
+        } 
       }
     }
     stage('deploy') {

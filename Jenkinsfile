@@ -1,11 +1,8 @@
 pipeline {
   agent { label 'slave' }
-  parameters {
-        choice(name: 'ENV', choices: ['dev', 'test', 'prod',"release"])
-  }
   stages {
     stage('build') {
-=
+
       steps {
         script {
           if (ENV.BRANCH_NAME == "release") {

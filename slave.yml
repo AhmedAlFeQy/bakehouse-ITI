@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slave1
+  namespace: devops-tools
+  labels:
+    app: slave1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slave1
+  template:
+    metadata:
+      labels:
+        app: slave1
+    spec:
+      serviceAccountName: jenkins-admin
+      automountServiceAccountToken: true
+      # securityContext:
+      #   fsGroup: 0
+      #   runAsUser: 0
+      containers:
+      - name: slave1
+        image: slave1:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 22
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: docker-sock
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: slave1-svc
+  namespace: devops-tools
+spec:
+  selector:
+    app: slave1
+  ports:
+  - port: 22
+    targetPort: 22
+    protocol: TCP
+
+

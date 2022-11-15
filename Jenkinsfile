@@ -20,9 +20,17 @@ pipeline {
     
       steps {
         script {
+            withCredentials([file(credentialsId: 'sa', variable: 'key')]) {
+              sh """
+                  gcloud auth activate-service-account manage-sa@feki-368302.iam.gserviceaccount.com --key-file ${key}
+        
+                """
+            }
+          
+          
             withCredentials([file(credentialsId: 'kube', variable: 'KUBECONFIG')]) {
               sh """
-                  gcloud auth activate-service-account manage-sa@feki-368302.iam.gserviceaccount.com --key-file key
+           
                   kubectl apply -f Deployment --kubeconfig=${KUBECONFIG}
                 """
             }

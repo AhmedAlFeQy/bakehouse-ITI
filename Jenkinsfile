@@ -22,6 +22,7 @@ pipeline {
         script {
             withCredentials([file(credentialsId: 'kube', variable: 'KUBECONFIG')]) {
               sh """
+                  gcloud auth login
                   kubectl apply -f Deployment --kubeconfig=${KUBECONFIG}
                 """
             }
